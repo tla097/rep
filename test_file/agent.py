@@ -20,7 +20,7 @@ class TPPairWiseDQNAgent:
             # base_model = DQN.load(model_path)
             base_model.set_env(env)
         # check_env(env)
-        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class,  device= 'cpu')
+        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class, device='cpu')
         if path_to_save:
             base_model.save(path_to_save)
         return base_model
