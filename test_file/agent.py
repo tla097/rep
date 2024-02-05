@@ -16,11 +16,11 @@ class TPPairWiseDQNAgent:
         path_to_save = path_to_save_agent
         print("running")
         if not base_model:
-            base_model = DQN(MlpPolicy, env)
+            base_model = DQN(MlpPolicy, env, device= 'cpu')
             # base_model = DQN.load(model_path)
             base_model.set_env(env)
         # check_env(env)
-        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class, device='cpu')
+        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class)
         if path_to_save:
             base_model.save(path_to_save)
         return base_model
@@ -37,7 +37,7 @@ class TPPairWiseDQNAgent:
         obs = env.reset()
         obs = np.array(obs)
         while True:
-            action, _states = model.predict(obs, deterministic=False, device='cpu')
+            action, _states = model.predict(obs, deterministic=False, device='auto')
             # print(action)
             obs, rewards, done, info = env.step(action)
             obs = np.array(obs)
