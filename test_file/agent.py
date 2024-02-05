@@ -62,7 +62,7 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
             
             print("SAVED")
             
-            self.model.save(f"models/new_model2")
+            self.model.save(f"{path_to_save}")
             with open(f"models/new_model_time2", "w") as f:
                 f.write(f"current modeltime = {curr}\n")
                 
