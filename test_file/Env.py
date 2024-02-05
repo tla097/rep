@@ -65,12 +65,9 @@ class CIPairWiseEnv(gym.Env):
         self.done = False
         
         self.observation = self.arr[self.list_counter],  self.pivot
-        
-<<<<<<< HEAD
+
         print("loop complete\n")
         
-=======
->>>>>>> 2707b6bc818cfaa81c18adc17a9ae50f32620324
         return list(self.arr[self.list_counter].values()) + list(self.pivot.values())
         
         
