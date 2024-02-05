@@ -6,7 +6,7 @@ from Env import CIPairWiseEnv
 import pandas as pd
 import numpy as np
 
-path_to_save = "models/new_model2"
+path_to_save = "models/new_model3"
 
 class TPPairWiseDQNAgent:
 
@@ -17,6 +17,7 @@ class TPPairWiseDQNAgent:
         print("running")
         if not base_model:
             base_model = DQN(MlpPolicy, env)
+            # base_model = DQN.load(model_path)
             base_model.set_env(env)
         # check_env(env)
         base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class)
@@ -42,7 +43,7 @@ class TPPairWiseDQNAgent:
             obs = np.array(obs)
             total_rewards += rewards
             num +=1 
-            
+
             if done:
                 break
             
