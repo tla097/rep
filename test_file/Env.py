@@ -17,16 +17,17 @@ class CIPairWiseEnv(gym.Env):
         self.reward_range = (0,1)
         
         min = excel.min(axis = 0).to_numpy()
+        min2 = np.concatenate((min, min))
         max = excel.max(axis = 0).to_numpy()
+        max2 = np.concatenate((max, max))
         
-        self.observation_space = spaces.Box(low=min, high=max)
+        self.observation_space = spaces.Box(low=min2, high=max2)
         self.action_space = spaces.Discrete(2)
         
         
     def reset(self):
         
-        self.observation = None, None
-        self.dict_excel = excel.to_dict(orient='records')
+        self.dict_excel = self.excel.to_dict(orient='records')
         self.arr = self.dict_excel
         
         self.arr = self.arr[:5606]
@@ -39,7 +40,7 @@ class CIPairWiseEnv(gym.Env):
         self.top = -1
         # self.quicksort_stack = []
         
-        print(self.arr)
+        # print(self.arr)
 
         
         
@@ -62,6 +63,10 @@ class CIPairWiseEnv(gym.Env):
         self.list_counter = self.low
         
         self.done = False
+        
+        self.observation = self.arr[self.list_counter],  self.pivot
+        
+        return list(self.arr[self.list_counter].values()) + list(self.pivot.values())
         
         
     def render(self, mode='human'):
@@ -137,39 +142,11 @@ class CIPairWiseEnv(gym.Env):
                 self.list_counter = self.low
                 
         # print(self.arr)
-        self.observation = (self.arr[self.list_counter], self.pivot)        
-        return self.observation, reward, done, {}
-
-    
         
-    
-    
+        
+        self.observation = (self.arr[self.list_counter], self.pivot)
+        
+        # print(list(self.arr[self.list_counter].values()) + list(self.pivot.values()))
+        
+        return list(self.arr[self.list_counter].values()) + list(self.pivot.values()), reward, done, {}
 
-
-column_names = ['last_run', 'my_maturity', 'Cycle', 'GapInRun', 'last_result', 'Month', 'Failure_Percentage', 'times_ran',
-                        'Verdict', 'Duration']
-
-with open("LOLOLOLOL.txt", "w") as f:
-    f.write("")
-
-excel = pd.read_csv("test_file/my_data_mutual_info3P3.csv")
-
-
-
-excel = excel[column_names]
-
-
-# print(all_rows_dict_list)
-e = CIPairWiseEnv(excel)
-
-
-
-# print(all_rows_dict_list)
-
-
-e.reset()
-
-for i in range(20):
-    e.step(1)
-    
-print(e.arr)
