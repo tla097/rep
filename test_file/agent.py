@@ -6,27 +6,30 @@ from Env import CIPairWiseEnv
 import pandas as pd
 import numpy as np
 
+path_to_save = "models/new_model2"
 
 class TPPairWiseDQNAgent:
 
     def train_agent(self, env: CIPairWiseEnv, steps: int, path_to_save_agent: None, base_model=None,
                     callback_class=None):
         env.reset()
+        path_to_save = path_to_save_agent
         print("running")
         if not base_model:
             base_model = DQN(MlpPolicy, env)
             base_model.set_env(env)
         # check_env(env)
         base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class)
-        if path_to_save_agent:
-            base_model.save(path_to_save_agent)
+        if path_to_save:
+            base_model.save(path_to_save)
         return base_model
     
     def test_agent(self, env: CIPairWiseEnv, model_path: str, model):
         agent_actions = []
         total_rewards = 0
         num = 0
-        print("Evaluation of an agent from " + model_path)
+        path_to_save = model_path
+        print("Evaluation of an agent from " + path_to_save)
         model = DQN.load(model_path)
         print("Agent is loaded")
         done = False
@@ -72,7 +75,7 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
             e = CIPairWiseEnv(excel)
             ag = TPPairWiseDQNAgent()
             
-            res = ag.test_agent(e, "models/new_model2", 0)
+            res = ag.test_agent(e, path_to_save, 0)
             with open("NEW_MODEL_2_RESULTS", "a") as f:
                 f.write(f" calls - {self.n_calls} score = {res}\n ")
                 
