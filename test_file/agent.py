@@ -11,7 +11,7 @@ path_to_save = "models/new_model3"
 class TPPairWiseDQNAgent:
 
     def train_agent(self, env: CIPairWiseEnv, steps: int, path_to_save_agent: None, base_model=None,
-                    callback_class=None):
+                    callback_class=None, device= 'cpu'):
         env.reset()
         path_to_save = path_to_save_agent
         print("running")
