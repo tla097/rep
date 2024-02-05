@@ -37,7 +37,7 @@ class TPPairWiseDQNAgent:
         obs = env.reset()
         obs = np.array(obs)
         while True:
-            action, _states = model.predict(obs, deterministic=False, device='auto')
+            action, _states = model.predict(obs, deterministic=False)
             # print(action)
             obs, rewards, done, info = env.step(action)
             obs = np.array(obs)
