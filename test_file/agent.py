@@ -6,7 +6,7 @@ from Env import CIPairWiseEnv
 import pandas as pd
 import numpy as np
 
-path_to_save = "models/new_model3"
+path_to_save = "models/new_model5"
 
 class TPPairWiseDQNAgent:
 
@@ -16,8 +16,8 @@ class TPPairWiseDQNAgent:
         path_to_save = path_to_save_agent
         print("running")
         if not base_model:
-            base_model = DQN(MlpPolicy, env, device= 'cpu')
-            # base_model = DQN.load(model_path)
+            # base_model = DQN(MlpPolicy, env, device='cpu')
+            base_model = DQN.load("models/new_model4")
             base_model.set_env(env)
         # check_env(env)
         base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class)
@@ -77,7 +77,7 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
             ag = TPPairWiseDQNAgent()
             
             res = ag.test_agent(e, path_to_save, 0)
-            with open("NEW_MODEL_2_RESULTS", "a") as f:
+            with open("NEW_MODEL_5", "a") as f:
                 f.write(f" calls - {self.n_calls} score = {res}\n ")
                 
             
@@ -99,7 +99,7 @@ callback = SaveOnBestTrainingRewardCallback(1000)
 
 start_time = time.time()
 
-ag.train_agent(env, 500000, "models/new_model2", callback_class= callback)
+ag.train_agent(env, 50000000000, path_to_save, callback_class= callback)
 
 # print(ag.test_agent(env, "models/new_model", 0))
 
