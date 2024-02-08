@@ -76,7 +76,7 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
             e = CIPairWiseEnv(excel)
             ag = TPPairWiseDQNAgent()
             
-            res = ag.test_agent(e, path_to_save, 0)
+            res = ag.test_agent(e, path_to_save)
             with open("NEW_MODEL_5", "a") as f:
                 f.write(f" calls - {self.n_calls} score = {res}\n ")
                 
