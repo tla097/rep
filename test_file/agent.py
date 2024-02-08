@@ -20,7 +20,7 @@ class TPPairWiseDQNAgent:
             base_model = DQN.load("models/new_model4")
             base_model.set_env(env)
         # check_env(env)
-        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class)
+        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class, device='cpu')
         if path_to_save:
             base_model.save(path_to_save)
         return base_model
@@ -37,7 +37,7 @@ class TPPairWiseDQNAgent:
         obs = env.reset()
         obs = np.array(obs)
         while True:
-            action, _states = model.predict(obs, deterministic=False)
+            action, _states = model.predict(obs, deterministic=False, device= 'cpu')
             # print(action)
             obs, rewards, done, info = env.step(action)
             obs = np.array(obs)
