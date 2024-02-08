@@ -11,7 +11,7 @@ path_to_save = "models/new_model5"
 class TPPairWiseDQNAgent:
 
     def train_agent(self, env: CIPairWiseEnv, steps: int, path_to_save_agent: None, base_model=None,
-                    callback_class=None):
+                    callback_class=None, device = 'cpu'):
         env.reset()
         path_to_save = path_to_save_agent
         print("running")
@@ -20,7 +20,7 @@ class TPPairWiseDQNAgent:
             base_model = DQN.load("models/new_model4")
             base_model.set_env(env)
         # check_env(env)
-        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class, device='cpu')
+        base_model = base_model.learn(total_timesteps=steps, reset_num_timesteps=False, callback=callback_class)
         if path_to_save:
             base_model.save(path_to_save)
         return base_model
